@@ -1,1 +1,6 @@
 เนื้อหาที่เรียน.txt
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.vscode/
