@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Arduino - รีโมทครูผู้สอน</title>
+  <title>Arduino-ESP-Master - รีโมทครูผู้สอน</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -373,7 +373,16 @@
     <div id="prog-skipped" class="progress-fill-skipped"></div>
   </div>
 
-  <!-- Settings Bar (Level + Focus) -->
+  <!-- Settings Bar (Board + Level + Focus) -->
+  <div class="settings-bar" style="margin-bottom: 8px;">
+    <select id="remote-board-select" class="select-pill">
+      <option value="all">ทุกบอร์ด (Arduino / ESP8266 / ESP32)</option>
+      <option value="arduino">Arduino (Uno / Nano)</option>
+      <option value="esp8266">ESP8266 (NodeMCU / Wemos)</option>
+      <option value="esp32">ESP32</option>
+    </select>
+  </div>
+
   <div class="settings-bar">
     <select id="remote-level-select" class="select-pill">
       <option value="1">ระดับ 1 (พื้นฐาน)</option>
@@ -455,6 +464,7 @@
     const progIncorrect = document.getElementById("prog-incorrect");
     const progSkipped = document.getElementById("prog-skipped");
 
+    const remoteBoardSelect = document.getElementById("remote-board-select");
     const remoteLevelSelect = document.getElementById("remote-level-select");
     const remoteFocusToggle = document.getElementById("remote-focus-toggle");
 
@@ -564,7 +574,10 @@
         if (progSkipped) progSkipped.style.width = "0%";
       }
 
-      // Level & Focus
+      // Board, Level & Focus
+      if (remoteBoardSelect && state.board && remoteBoardSelect.value !== state.board) {
+        remoteBoardSelect.value = state.board;
+      }
       if (remoteLevelSelect && state.level && remoteLevelSelect.value !== state.level) {
         remoteLevelSelect.value = state.level;
       }
@@ -618,6 +631,13 @@
         sendAction("click", "restart_game");
         showToast("รีเซ็ตคะแนนแล้ว");
       }
+    });
+
+    // Board change
+    remoteBoardSelect.addEventListener("change", (e) => {
+      const label = e.target.options[e.target.selectedIndex].text;
+      sendAction("set_board", null, e.target.value);
+      showToast("เปลี่ยนบอร์ด: " + label);
     });
 
     // Level change

@@ -80,6 +80,124 @@
             "switch_cmd", "case_cmd", "break_cmd", "array_declare", "include_lib"
         ];
 
+        const BOARD_CONFIG = {
+            all: {
+                subtitle: "ฝึกเติม code Arduino / ESP8266 / ESP32 ในช่องว่าง",
+                pins: [4, 13],
+                ledPin: 13,
+                buttonPin: 4,
+                pwmPin: 5,
+                baudRate: 9600,
+                highVoltageHint: "สั่งจ่ายไฟ HIGH (5V บน Arduino / 3.3V บน ESP) พิมพ์ใหญ่ทั้งหมด",
+                lowVoltageHint: "สั่งตัดไฟ LOW (0V) พิมพ์ใหญ่ทั้งหมด",
+                stringExample: "IoT",
+                analogPin: "A0",
+                analogMax: 1023,
+                analogComment: "// อ่านค่าอนาล็อก (Uno/ESP8266: 0-1023, ESP32: 0-4095)",
+                analogHint: "อ่านค่าอนาล็อก (Uno: A0-A5, ESP8266: A0, ESP32: ขา ADC เช่น 34)",
+                pwmComment: "// สั่งจ่ายไฟ PWM ครึ่งหนึ่ง (บน ESP32 แนะนำขาเขียวเช่น 18)",
+                pwmHint: "สั่งจ่ายสัญญาณ PWM (ค่า 0-255, ESP32 ใช้ Core v2+)",
+                mapHint: "ฟังก์ชันแปลงช่วงค่า (เช่น 0-1023 เป็น 0-255, ESP32 ใช้ 0-4095)",
+                arrayDecl: "int scores__________ = {10, 20, 30, 40, 50};",
+                libHeader: "Wire.h",
+                libBody: " // ไลบรารีสื่อสาร I2C (ใช้ได้กับทุกบอร์ด)",
+                libHint: "คำสั่งเรียกใช้งานไลบรารีเพิ่มเติม (ขึ้นต้นด้วย #)"
+            },
+            arduino: {
+                subtitle: "ฝึกเติม code Arduino ในช่องว่าง",
+                pins: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+                ledPin: 13,
+                buttonPin: 2,
+                pwmPin: 9,
+                baudRate: 9600,
+                highVoltageHint: "สั่งจ่ายไฟ 5V (พิมพ์ใหญ่ทั้งหมด)",
+                lowVoltageHint: "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)",
+                stringExample: "Arduino",
+                analogPin: "A0",
+                analogMax: 1023,
+                analogComment: "// อ่านค่าอนาล็อก 0-1023",
+                analogHint: "อ่านค่าอนาล็อกจากขา A0 ถึง A5",
+                pwmComment: "// สั่งจ่ายไฟ PWM ครึ่งหนึ่ง (0-255)",
+                pwmHint: "สั่งจ่ายสัญญาณ PWM (ค่า 0-255)",
+                mapHint: "ฟังก์ชันแปลงช่วงค่า (เช่น 0-1023 เป็น 0-255)",
+                arrayDecl: "int ledPins__________ = {2, 3, 4, 5, 6};",
+                libHeader: "Servo.h",
+                libBody: "\n\nServo myServo;",
+                libHint: "คำสั่งเรียกใช้งานไลบรารีเพิ่มเติม (ขึ้นต้นด้วย #)"
+            },
+            esp8266: {
+                subtitle: "ฝึกเติม code ESP8266 ในช่องว่าง",
+                pins: [4, 5, 12, 13, 14],
+                ledPin: 2,
+                buttonPin: 4,
+                pwmPin: 5,
+                baudRate: 115200,
+                highVoltageHint: "สั่งจ่ายไฟ 3.3V (พิมพ์ใหญ่ทั้งหมด)",
+                lowVoltageHint: "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)",
+                stringExample: "ESP8266",
+                analogPin: "A0",
+                analogMax: 1023,
+                analogComment: "// อ่านค่าอนาล็อก 0-1023",
+                analogHint: "อ่านค่าอนาล็อกจากขา A0 (ESP8266 มีขาอนาล็อก 1 ขา)",
+                pwmComment: "// สั่งจ่ายไฟ PWM ครึ่งหนึ่ง (0-255)",
+                pwmHint: "สั่งจ่ายสัญญาณ PWM บน ESP8266 (ค่า 0-255, Core 3.0+)",
+                mapHint: "ฟังก์ชันแปลงช่วงค่า (เช่น 0-1023 เป็น 0-255)",
+                arrayDecl: "int ledPins__________ = {4, 5, 12, 13, 14};",
+                libHeader: "ESP8266WiFi.h",
+                libBody: "",
+                libHint: "คำสั่งเรียกใช้งานไลบรารี Wi-Fi ของ ESP8266 (ขึ้นต้นด้วย #)"
+            },
+            esp32: {
+                subtitle: "ฝึกเติม code ESP32 ในช่องว่าง",
+                pins: [4, 13, 14, 16, 17, 18, 19, 23, 25, 26, 27, 32, 33],
+                ledPin: 18,
+                buttonPin: 19,
+                pwmPin: 18,
+                baudRate: 115200,
+                highVoltageHint: "สั่งจ่ายไฟ 3.3V (พิมพ์ใหญ่ทั้งหมด)",
+                lowVoltageHint: "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)",
+                stringExample: "ESP32",
+                analogPin: "34",
+                analogMax: 4095,
+                analogComment: "// อ่านค่าอนาล็อก 0-4095 (12-bit)",
+                analogHint: "อ่านค่าอนาล็อกจากขา ADC1 ของ ESP32 (เช่น GPIO 34, 35, 36, 39)",
+                pwmComment: "// สั่งจ่ายไฟ PWM ครึ่งหนึ่ง (ESP32 Core v2+)",
+                pwmHint: "สั่งจ่ายสัญญาณ PWM (ค่า 0-255, ESP32 Core v2+ รองรับเหมือน Arduino)",
+                mapHint: "ฟังก์ชันแปลงช่วงค่า (แปลงค่า ADC 0-4095 ของ ESP32 เป็น 0-255)",
+                arrayDecl: "int ledPins__________ = {4, 13, 14, 18, 19};",
+                libHeader: "WiFi.h",
+                libBody: "",
+                libHint: "คำสั่งเรียกใช้งานไลบรารี Wi-Fi ของ ESP32 (ขึ้นต้นด้วย #)"
+            }
+        };
+
+        function getCurrentBoard() {
+            const boardSelect = document.getElementById("board-select");
+            return boardSelect && BOARD_CONFIG[boardSelect.value] ? boardSelect.value : "all";
+        }
+
+        function getBoardConfig() {
+            return BOARD_CONFIG[getCurrentBoard()];
+        }
+
+        function updateBoardSubtitle(board) {
+            const cfg = BOARD_CONFIG[board] || BOARD_CONFIG.all;
+            const subtitleEl = document.getElementById("board-subtitle");
+            if (subtitleEl) {
+                subtitleEl.textContent = cfg.subtitle;
+            }
+        }
+
+        function changeBoard() {
+            const board = getCurrentBoard();
+            updateBoardSubtitle(board);
+
+            if (currentQuestionStatus === "unattempted") {
+                currentQuestionStatus = "completed"; // ป้องกันการนับเป็นข้ามเมื่อสลับบอร์ด
+            }
+            nextQuestion();
+        }
+
         function changeLevel() {
             const level = document.getElementById("level-select").value;
             const focusContainer = document.getElementById("focus-switch-container");
@@ -170,9 +288,11 @@
             
             lastQuestionType = type;
             
-            // สุ่มขาพิน 2 ถึง 13 (ห้ามใช้ 0, 1)
+            const cfg = getBoardConfig();
+
+            // สุ่มขาพินที่ปลอดภัยตามบอร์ดที่เลือก
             function getRandomPin() {
-                return Math.floor(Math.random() * 12) + 2;
+                return cfg.pins[Math.floor(Math.random() * cfg.pins.length)];
             }
             
             let template = "";
@@ -191,12 +311,12 @@
                     hint = "บล็อกการทำงานหลัก";
                     break;
                 case "serial_begin_serial":
-                    template = "void setup() {\n  __________.begin(9600);\n}\n\nvoid loop() {\n  \n}";
+                    template = "void setup() {\n  __________.begin(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  \n}";
                     answer = "Serial";
                     hint = "หน้าจอตรวจสอบอนุกรม (ขึ้นต้นด้วยตัวพิมพ์ใหญ่)";
                     break;
                 case "serial_begin_begin":
-                    template = "void setup() {\n  Serial.__________(9600);\n}\n\nvoid loop() {\n  \n}";
+                    template = "void setup() {\n  Serial.__________(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  \n}";
                     answer = "begin";
                     hint = "คำสั่งเปิดท่อสื่อสาร";
                     break;
@@ -207,22 +327,22 @@
                     hint = "คำสั่งหน่วงเวลาเป็นมิลลิวินาที";
                     break;
                 case "serial_print_serial":
-                    template = "void setup() {\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  __________.print(\"Hello\");\n}";
+                    template = "void setup() {\n  Serial.begin(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  __________.print(\"Hello\");\n}";
                     answer = "Serial";
                     hint = "หน้าจอตรวจสอบอนุกรม (ขึ้นต้นด้วยตัวพิมพ์ใหญ่)";
                     break;
                 case "serial_print_print":
-                    template = "void setup() {\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  Serial.__________(\"Hello\");\n}";
+                    template = "void setup() {\n  Serial.begin(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  Serial.__________(\"Hello\");\n}";
                     answer = "print";
                     hint = "พิมพ์ข้อความออกจอ (ไม่ขึ้นบรรทัดใหม่)";
                     break;
                 case "serial_println_serial":
-                    template = "void setup() {\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  __________.println(\"World\");\n}";
+                    template = "void setup() {\n  Serial.begin(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  __________.println(\"World\");\n}";
                     answer = "Serial";
                     hint = "หน้าจอตรวจสอบอนุกรม (ขึ้นต้นด้วยตัวพิมพ์ใหญ่)";
                     break;
                 case "serial_println_println":
-                    template = "void setup() {\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  Serial.__________(\"World\");\n}";
+                    template = "void setup() {\n  Serial.begin(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  Serial.__________(\"World\");\n}";
                     answer = "println";
                     hint = "พิมพ์ข้อความออกจอ (พร้อมขึ้นบรรทัดใหม่)";
                     break;
@@ -256,7 +376,7 @@
                     const state2 = states2[Math.floor(Math.random() * states2.length)];
                     template = "void setup() {\n  pinMode(" + pin4 + ", OUTPUT);\n}\n\nvoid loop() {\n  digitalWrite(" + pin4 + ", __________);\n}";
                     answer = state2;
-                    hint = state2 === "HIGH" ? "สั่งจ่ายไฟ 5V (พิมพ์ใหญ่ทั้งหมด)" : "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)";
+                    hint = state2 === "HIGH" ? cfg.highVoltageHint : cfg.lowVoltageHint;
                     break;
                 case "var_int":
                     const numInt = Math.floor(Math.random() * 100);
@@ -271,7 +391,7 @@
                     hint = "ชนิดตัวแปรเก็บค่าตัวเลขทศนิยม";
                     break;
                 case "var_string":
-                    template = "__________ name = \"Arduino\";\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  \n}";
+                    template = "__________ name = \"" + cfg.stringExample + "\";\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  \n}";
                     answer = "String";
                     hint = "ชนิดตัวแปรเก็บข้อความยาวๆ (ตัวอักษรแรกพิมพ์ใหญ่)";
                     break;
@@ -325,12 +445,12 @@
                     hint = "เครื่องหมายเปรียบเทียบความไม่เท่ากัน";
                     break;
                 case "if_cond":
-                    template = "void loop() {\n  __________ (sensorValue > 500) {\n    digitalWrite(13, HIGH);\n  }\n}";
+                    template = "void loop() {\n  __________ (sensorValue > 500) {\n    digitalWrite(" + cfg.ledPin + ", HIGH);\n  }\n}";
                     answer = "if";
                     hint = "คำสั่งเช็คเงื่อนไข (ถ้า...)";
                     break;
                 case "else_cond":
-                    template = "void loop() {\n  if (sensorValue > 500) {\n    digitalWrite(13, HIGH);\n  } __________ {\n    digitalWrite(13, LOW);\n  }\n}";
+                    template = "void loop() {\n  if (sensorValue > 500) {\n    digitalWrite(" + cfg.ledPin + ", HIGH);\n  } __________ {\n    digitalWrite(" + cfg.ledPin + ", LOW);\n  }\n}";
                     answer = "else";
                     hint = "คำสั่งทำงานเมื่อเงื่อนไขแรกไม่เป็นจริง (มิฉะนั้น...)";
                     break;
@@ -345,7 +465,7 @@
                     hint = "คำสั่งวนลูปแบบรู้จำนวนรอบที่แน่นอน";
                     break;
                 case "while_loop":
-                    template = "void setup() {\n  \n}\n\nvoid loop() {\n  __________ (digitalRead(2) == HIGH) {\n    // วนลูปตราบใดที่ปุ่มยังถูกกดอยู่\n  }\n}";
+                    template = "void setup() {\n  \n}\n\nvoid loop() {\n  __________ (digitalRead(" + cfg.buttonPin + ") == HIGH) {\n    // วนลูปตราบใดที่ปุ่มยังถูกกดอยู่\n  }\n}";
                     answer = "while";
                     hint = "คำสั่งวนลูปตราบใดที่เงื่อนไขยังเป็นจริง";
                     break;
@@ -356,17 +476,17 @@
                     hint = "อ่านค่าสถานะดิจิทัลจากขาพิน (HIGH/LOW)";
                     break;
                 case "analog_read":
-                    template = "void setup() {\n  \n}\n\nvoid loop() {\n  int val = __________(A0); // อ่านค่าอนาล็อก 0-1023\n}";
+                    template = "void setup() {\n  \n}\n\nvoid loop() {\n  int val = __________(" + cfg.analogPin + "); " + cfg.analogComment + "\n}";
                     answer = "analogRead";
-                    hint = "อ่านค่าอนาล็อกจากขา A0 ถึง A5";
+                    hint = cfg.analogHint;
                     break;
                 case "analog_write":
-                    template = "void setup() {\n  pinMode(9, OUTPUT);\n}\n\nvoid loop() {\n  __________(9, 128); // สั่งจ่ายไฟ PWM ครึ่งหนึ่ง\n}";
+                    template = "void setup() {\n  pinMode(" + cfg.pwmPin + ", OUTPUT);\n}\n\nvoid loop() {\n  __________(" + cfg.pwmPin + ", 128); " + cfg.pwmComment + "\n}";
                     answer = "analogWrite";
-                    hint = "สั่งจ่ายสัญญาณ PWM (ค่า 0-255)";
+                    hint = cfg.pwmHint;
                     break;
                 case "func_void":
-                    template = "__________ turnOnLed() {\n  digitalWrite(13, HIGH);\n}\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  turnOnLed();\n}";
+                    template = "__________ turnOnLed() {\n  digitalWrite(" + cfg.ledPin + ", HIGH);\n}\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  turnOnLed();\n}";
                     answer = "void";
                     hint = "ชนิดฟังก์ชันที่ไม่ต้องส่งค่ากลับ";
                     break;
@@ -396,9 +516,9 @@
                     hint = "ฟังก์ชันคืนค่าเวลาเป็นมิลลิวินาทีตั้งแต่เปิดบอร์ด";
                     break;
                 case "math_map":
-                    template = "void loop() {\n  int val = analogRead(A0);\n  int pwmVal = __________(val, 0, 1023, 0, 255);\n  analogWrite(9, pwmVal);\n}";
+                    template = "void loop() {\n  int val = analogRead(" + cfg.analogPin + ");\n  int pwmVal = __________(val, 0, " + cfg.analogMax + ", 0, 255);\n  analogWrite(" + cfg.pwmPin + ", pwmVal);\n}";
                     answer = "map";
-                    hint = "ฟังก์ชันแปลงช่วงค่า (เช่น 0-1023 เป็น 0-255)";
+                    hint = cfg.mapHint;
                     break;
                 case "math_random":
                     template = "void loop() {\n  int r = __________(1, 7); // สุ่มเลข 1 ถึง 6\n}";
@@ -421,14 +541,14 @@
                     hint = "คำสั่งหยุดและกระโดดออกจากลูปหรือ switch";
                     break;
                 case "array_declare":
-                    template = "int ledPins__________ = {2, 3, 4, 5, 6};\n\nvoid setup() {\n  \n}";
+                    template = cfg.arrayDecl + "\n\nvoid setup() {\n  \n}";
                     answer = "[5]";
                     hint = "กำหนดขนาดของอาร์เรย์ (ใส่วงเล็บเหลี่ยมและเลข 5)";
                     break;
                 case "include_lib":
-                    template = "__________ <Servo.h>\n\nServo myServo;\n\nvoid setup() {\n  \n}";
+                    template = "__________ <" + cfg.libHeader + ">" + cfg.libBody + "\n\nvoid setup() {\n  \n}";
                     answer = "#include";
-                    hint = "คำสั่งเรียกใช้งานไลบรารีเพิ่มเติม (ขึ้นต้นด้วย #)";
+                    hint = cfg.libHint;
                     break;
             }
             return { template, answer, hint };
@@ -542,12 +662,13 @@
             if (!isTeachingMode || !window.location.protocol.startsWith("http")) return;
 
             const codeDisplayEl = document.getElementById("code-display");
+            const boardSelect = document.getElementById("board-select");
             const levelSelect = document.getElementById("level-select");
             const focusToggle = document.getElementById("focus-toggle");
             const userInputEl = document.getElementById("userInput");
 
             const state = {
-                gameTitle: "Arduino Syntax Training",
+                gameTitle: "Arduino-ESP-Master",
                 questionText: codeDisplayEl ? codeDisplayEl.innerText.trim() : "",
                 correctAnswer: currentAnswer,
                 hint: currentHint,
@@ -557,6 +678,7 @@
                 totalQuestions: scoreCorrect + scoreIncorrect + scoreSkipped,
                 status: currentQuestionStatus,
                 isAnswered: currentQuestionStatus !== "unattempted",
+                board: boardSelect ? boardSelect.value : "all",
                 level: levelSelect ? levelSelect.value : "1",
                 focus: focusToggle ? focusToggle.checked : false,
                 inputValue: userInputEl ? userInputEl.value : ""
@@ -620,6 +742,12 @@
                         setTimeout(() => el.classList.remove("remote-click-active"), 250);
                         el.click();
                     }
+                }
+            } else if (data.action === "set_board") {
+                const boardSelect = document.getElementById("board-select");
+                if (boardSelect && data.value && BOARD_CONFIG[data.value] && boardSelect.value !== data.value) {
+                    boardSelect.value = data.value;
+                    changeBoard();
                 }
             } else if (data.action === "set_level") {
                 const levelSelect = document.getElementById("level-select");
@@ -813,5 +941,6 @@
         }
 
         // เริ่มเกมข้อแรกและตรวจจับ Server
+        updateBoardSubtitle(getCurrentBoard());
         nextQuestion();
         detectPythonServer();

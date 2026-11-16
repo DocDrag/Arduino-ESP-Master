@@ -19,7 +19,7 @@ os.chdir(BASE_DIR)
 subscribers_lock = threading.Lock()
 subscribers = set()
 latest_state = {
-    "questionText": "ฝึกเติม code Arduino ในช่องว่าง",
+    "questionText": "ฝึกเติม code Arduino / ESP8266 / ESP32 ในช่องว่าง",
     "correctAnswer": "",
     "hint": "",
     "scoreCorrect": 0,
@@ -27,6 +27,7 @@ latest_state = {
     "scoreSkipped": 0,
     "totalQuestions": 0,
     "status": "unattempted",
+    "board": "all",
     "level": "1",
     "focus": False,
     "inputValue": ""
@@ -329,7 +330,7 @@ def print_banner(port, tailscale_ip, wifi_ip):
     wifi_url = f"http://{wifi_ip}:{port}/remote" if wifi_ip else None
 
     print("\n" + "=" * 65)
-    print("   🎮 Arduino Syntax Training - Remote Teaching Server")
+    print("   🎮 Arduino-ESP-Master - Remote Teaching Server")
     print("=" * 65)
     print(f" [✓] เซิร์ฟเวอร์พร้อมทำงานที่ Port: {port}")
     print()

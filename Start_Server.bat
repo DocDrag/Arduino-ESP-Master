@@ -1,7 +1,7 @@
 @echo off
-title Arduino Syntax Training - Remote Teaching Server
+title Arduino-ESP-Master - Remote Teaching Server
 cd /d "%~dp0"
-echo Starting Arduino Syntax Training Server...
+echo Starting Arduino-ESP-Master Server...
 python run_server.py
 if %ERRORLEVEL% NEQ 0 (
     echo.
