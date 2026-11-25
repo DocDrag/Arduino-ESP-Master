@@ -39,7 +39,7 @@
         }
 
         const level1Types = [
-            "setup", "loop", "serial_begin_serial", "serial_begin_begin", "delay"
+            "setup", "loop", "serial_begin_serial", "serial_begin_begin", "serial_begin_baud", "delay"
         ];
         
         const level2Types = [
@@ -53,12 +53,27 @@
         ];
 
         const level4Types = [
-            "const_int", "define_pin", "math_inc", "math_dec", "math_mod", "compare_eq", "compare_neq"
+            "const_int", "define_pin", "assign_eq", "assign_add", "assign_sub", "assign_mul", "assign_div", "assign_mod", "math_inc", "math_dec", "math_mod"
         ];
         
         const level5Types = [
-            "if_cond", "else_cond", "else_if_cond"
+            "if_cond", "else_cond", "else_if_cond", "compare_eq", "compare_neq", "compare_gt", "compare_lt", "compare_gte", "compare_lte"
         ];
+
+        const STATIC_OPERATOR_CASES = {
+            assign_eq: { template: "int x = 0;\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  x __________ 10; // กำหนดค่าให้ x เท่ากับ 10\n}", answer: "=", hint: "เครื่องหมายกำหนดค่าให้ตัวแปร" },
+            assign_add: { template: "int score = 10;\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  score __________ 5; // บวกเพิ่มอีก 5 (score = score + 5)\n}", answer: "+=", hint: "เครื่องหมายบวกเพิ่มและเก็บค่าเดิม" },
+            assign_sub: { template: "int hp = 100;\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  hp __________ 20; // ลบออก 20 (hp = hp - 20)\n}", answer: "-=", hint: "เครื่องหมายลบออกและเก็บค่าเดิม" },
+            assign_mul: { template: "int val = 2;\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  val __________ 3; // คูณด้วย 3 (val = val * 3)\n}", answer: "*=", hint: "เครื่องหมายคูณและเก็บค่าเดิม" },
+            assign_div: { template: "int total = 100;\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  total __________ 2; // หารด้วย 2 (total = total / 2)\n}", answer: "/=", hint: "เครื่องหมายหารและเก็บค่าเดิม" },
+            assign_mod: { template: "int n = 10;\n\nvoid setup() {\n  \n}\n\nvoid loop() {\n  n __________ 3; // หารเอาเศษ 3 แล้วเก็บใน n\n}", answer: "%=", hint: "เครื่องหมายหารเอาเศษและเก็บค่าเดิม" },
+            compare_eq: { template: "void setup() {\n  \n}\n\nvoid loop() {\n  if (score __________ 100) {\n    // ทำงานเมื่อคะแนนเท่ากับ 100\n  }\n}", answer: "==", hint: "เครื่องหมายเปรียบเทียบความเท่ากัน (ใช้ 2 ตัวติดกัน)" },
+            compare_neq: { template: "void setup() {\n  \n}\n\nvoid loop() {\n  if (status __________ 0) {\n    // ทำงานเมื่อสถานะไม่เท่ากับ 0\n  }\n}", answer: "!=", hint: "เครื่องหมายเปรียบเทียบความไม่เท่ากัน" },
+            compare_gt: { template: "void loop() {\n  if (temp __________ 35) {\n    // ทำงานเมื่ออุณหภูมิมากกว่า 35\n  }\n}", answer: ">", hint: "เครื่องหมายมากกว่า" },
+            compare_lt: { template: "void loop() {\n  if (battery __________ 20) {\n    // ทำงานเมื่อแบตเตอรี่น้อยกว่า 20\n  }\n}", answer: "<", hint: "เครื่องหมายน้อยกว่า" },
+            compare_gte: { template: "void loop() {\n  if (score __________ 80) {\n    // ทำงานเมื่อคะแนนมากกว่าหรือเท่ากับ 80\n  }\n}", answer: ">=", hint: "เครื่องหมายมากกว่าหรือเท่ากับ" },
+            compare_lte: { template: "void loop() {\n  if (speed __________ 60) {\n    // ทำงานเมื่อความเร็วน้อยกว่าหรือเท่ากับ 60\n  }\n}", answer: "<=", hint: "เครื่องหมายน้อยกว่าหรือเท่ากับ" }
+        };
         
         const level6Types = [
             "for_loop", "while_loop"
@@ -88,6 +103,10 @@
                 buttonPin: 4,
                 pwmPin: 5,
                 baudRate: 9600,
+                baudOptions: [
+                    { label: "Arduino (Uno / Nano)", rate: "9600" },
+                    { label: "ESP8266 / ESP32", rate: "115200" }
+                ],
                 highVoltageHint: "สั่งจ่ายไฟ HIGH (5V บน Arduino / 3.3V บน ESP) พิมพ์ใหญ่ทั้งหมด",
                 lowVoltageHint: "สั่งตัดไฟ LOW (0V) พิมพ์ใหญ่ทั้งหมด",
                 stringExample: "IoT",
@@ -110,6 +129,9 @@
                 buttonPin: 2,
                 pwmPin: 9,
                 baudRate: 9600,
+                baudOptions: [
+                    { label: "Arduino (Uno / Nano)", rate: "9600" }
+                ],
                 highVoltageHint: "สั่งจ่ายไฟ 5V (พิมพ์ใหญ่ทั้งหมด)",
                 lowVoltageHint: "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)",
                 stringExample: "Arduino",
@@ -132,6 +154,9 @@
                 buttonPin: 4,
                 pwmPin: 5,
                 baudRate: 115200,
+                baudOptions: [
+                    { label: "ESP8266", rate: "115200" }
+                ],
                 highVoltageHint: "สั่งจ่ายไฟ 3.3V (พิมพ์ใหญ่ทั้งหมด)",
                 lowVoltageHint: "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)",
                 stringExample: "ESP8266",
@@ -154,6 +179,9 @@
                 buttonPin: 19,
                 pwmPin: 18,
                 baudRate: 115200,
+                baudOptions: [
+                    { label: "ESP32", rate: "115200" }
+                ],
                 highVoltageHint: "สั่งจ่ายไฟ 3.3V (พิมพ์ใหญ่ทั้งหมด)",
                 lowVoltageHint: "สั่งตัดไฟ 0V (พิมพ์ใหญ่ทั้งหมด)",
                 stringExample: "ESP32",
@@ -287,7 +315,11 @@
             } while (type === lastQuestionType && questionTypes.length > 1);
             
             lastQuestionType = type;
-            
+
+            if (STATIC_OPERATOR_CASES[type]) {
+                return { ...STATIC_OPERATOR_CASES[type] };
+            }
+
             const cfg = getBoardConfig();
 
             // สุ่มขาพินที่ปลอดภัยตามบอร์ดที่เลือก
@@ -319,6 +351,12 @@
                     template = "void setup() {\n  Serial.__________(" + cfg.baudRate + ");\n}\n\nvoid loop() {\n  \n}";
                     answer = "begin";
                     hint = "คำสั่งเปิดท่อสื่อสาร";
+                    break;
+                case "serial_begin_baud":
+                    const baudChoice = cfg.baudOptions[Math.floor(Math.random() * cfg.baudOptions.length)];
+                    template = "void setup() {\n  Serial.begin(__________); // Baud rate มาตรฐานของ " + baudChoice.label + "\n}\n\nvoid loop() {\n  \n}";
+                    answer = baudChoice.rate;
+                    hint = "ค่า Baud rate มาตรฐานของ " + baudChoice.label + " (ความเร็วสื่อสาร Serial)";
                     break;
                 case "delay":
                     const ms = [100, 500, 1000, 2000, 5000][Math.floor(Math.random() * 5)];
@@ -433,16 +471,6 @@
                     template = "void setup() {\n  \n}\n\nvoid loop() {\n  int remain = 10 __________ 3; // หารเอาเศษ ได้ 1\n}";
                     answer = "%";
                     hint = "เครื่องหมายหารเอาเศษ (Modulo)";
-                    break;
-                case "compare_eq":
-                    template = "void setup() {\n  \n}\n\nvoid loop() {\n  if (score __________ 100) {\n    // ทำงานเมื่อคะแนนเท่ากับ 100\n  }\n}";
-                    answer = "==";
-                    hint = "เครื่องหมายเปรียบเทียบความเท่ากัน (ใช้ 2 ตัวติดกัน)";
-                    break;
-                case "compare_neq":
-                    template = "void setup() {\n  \n}\n\nvoid loop() {\n  if (status __________ 0) {\n    // ทำงานเมื่อสถานะไม่เท่ากับ 0\n  }\n}";
-                    answer = "!=";
-                    hint = "เครื่องหมายเปรียบเทียบความไม่เท่ากัน";
                     break;
                 case "if_cond":
                     template = "void loop() {\n  __________ (sensorValue > 500) {\n    digitalWrite(" + cfg.ledPin + ", HIGH);\n  }\n}";
