@@ -52,6 +52,9 @@
         .btn-check:hover { background: #005f9e; }
         .btn-next { background: #555; color: white; }
         .btn-next:hover { background: #777; }
+        .btn-next-ready { background: #2e7d32; color: white; font-weight: bold; }
+        .btn-next-ready:hover { background: #388e3c; }
+        button:disabled { opacity: 0.45; cursor: not-allowed; }
         .btn-restart { background: #ff9800; color: white; }
         .btn-restart:hover { background: #e68a00; }
         .feedback { 

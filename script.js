@@ -582,7 +582,29 @@
             return { template, answer, hint };
         }
 
+        function updateActionButtonsUI() {
+            const btnCheck = document.getElementById("btn-check");
+            const btnNext = document.getElementById("btn-next");
+            const isCompleted = currentQuestionStatus === "completed";
+
+            if (btnCheck) {
+                btnCheck.disabled = isCompleted;
+            }
+            if (btnNext) {
+                btnNext.textContent = isCompleted ? "ข้อถัดไป 🎲" : "ข้ามข้อนี้ ⏭️";
+                btnNext.classList.toggle("btn-next-ready", isCompleted);
+            }
+        }
+
         function nextQuestion() {
+            if (currentAnswer !== "" && currentQuestionStatus === "unattempted") {
+                const userInputEl = document.getElementById("userInput");
+                if (userInputEl && userInputEl.value.trim() !== "") {
+                    checkAnswer();
+                    return;
+                }
+            }
+
             if (currentAnswer !== "") {
                 if (currentQuestionStatus !== "completed") {
                     finalizeCurrentQuestion();
@@ -600,6 +622,7 @@
             
             document.getElementById("code-display").innerHTML = htmlCode;
             document.getElementById("feedback").innerHTML = `<span style="color: #888; font-size: 0.9rem;">คำใบ้: ${currentHint}</span>`;
+            updateActionButtonsUI();
             
             // Auto Focus ที่ช่องเติมคำ
             setTimeout(() => document.getElementById("userInput").focus(), 100);
@@ -630,6 +653,7 @@
                     feedbackBox.innerHTML = `<span class='incorrect'>❌ ผิดจ้า! คำตอบที่ถูกต้องคือ <strong>${currentAnswer}</strong></span>`;
                 }
             }
+            updateActionButtonsUI();
             syncStateToRemote();
         }
 
@@ -680,6 +704,7 @@
                 feedbackBox.innerHTML = `<span class='incorrect'>💡 เฉลย: คำตอบที่ถูกต้องคือ <strong>${currentAnswer}</strong></span>`;
             }
 
+            updateActionButtonsUI();
             syncStateToRemote();
         }
 
